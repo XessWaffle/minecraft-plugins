@@ -42,13 +42,13 @@ class TargetListener implements Listener {
 	
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
-		if(lookup.getTargets().contains(event.getPlayer().getName()) && enabled) {
+		if(lookup.getTargets().contains(event.getPlayer().getName()) && enabled && Math.random() > 0.75) {
 			Location expLoc = event.getBlock().getLocation();
 			
 			World w = event.getPlayer().getWorld();
 			w.createExplosion(expLoc, 2, false);
-			
-			event.getPlayer().teleport(new Location(w, expLoc.toVector().getX(), 256, expLoc.toVector().getZ()));		
+			if(Math.random() > 0.8)
+				event.getPlayer().teleport(new Location(w, expLoc.toVector().getX(), expLoc.toVector().getY() + (int)((Math.random() - 0.5) * 10), expLoc.toVector().getZ()));		
 		}
 	}
 	
