@@ -46,9 +46,8 @@ class TargetListener implements Listener {
 			Location expLoc = event.getBlock().getLocation();
 			
 			World w = event.getPlayer().getWorld();
-			w.createExplosion(expLoc, 2, false);
-			if(Math.random() > 0.4)
-				event.getPlayer().teleport(new Location(w, expLoc.toVector().getX(), expLoc.toVector().getY() + (int)((Math.random() - 0.5) * 10), expLoc.toVector().getZ()));		
+			//w.createExplosion(expLoc, 2, false);
+			event.getPlayer().teleport(new Location(w, expLoc.toVector().getX() + (int)((Math.random() - 0.5) * 10), expLoc.toVector().getY(), expLoc.toVector().getZ() + (int)((Math.random() - 0.5) * 10)));		
 		}
 	}
 	
