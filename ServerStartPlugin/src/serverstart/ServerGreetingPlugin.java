@@ -34,7 +34,7 @@ class GreetingsListener implements Listener{
 	public GreetingsListener() {
 		welcomeMessages = new ArrayList<>();
 		deathMessages = new ArrayList<>();
-		respawnMessages = new ArrayList();
+		respawnMessages = new ArrayList<>();
 		
 		welcomeMessages.add("Wassup <name>? how ya doin?");
 		welcomeMessages.add("Everyone prepare your assholes, <name> has joined the server!");
