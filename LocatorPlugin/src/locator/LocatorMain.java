@@ -46,7 +46,12 @@ public class LocatorMain extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        Bukkit.getScheduler().runTaskAsynchronously(this, () -> getServer().getOnlinePlayers().forEach(player -> jl.savePlayerLog(player,true)));
+        Bukkit.getScheduler().runTaskAsynchronously(this, () -> getServer().getOnlinePlayers().forEach(
+                player -> {
+                    jl.savePlayerLog(player,true);
+                    jl.cl.execCommand(player, CommandLocation.Task.clear,null);
+                })
+        );
     }
 
 
