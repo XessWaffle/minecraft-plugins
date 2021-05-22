@@ -2,3 +2,7 @@ name: LocatorPlugin
 main: locator.LocatorMain
 version: 1.0
 api-version: 1.16
+commands:
+  location:
+    description: Store and mark locations
+    usage: /location command tag comment OR /location command X Y Z tag comment
