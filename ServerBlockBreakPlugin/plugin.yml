@@ -1,7 +1,7 @@
 name: BlockBreakPlugin
 main: blockbreak.BlockBreakPlugin
 version: 1.0
-api-version: 1.16
+api-version: 1.17
 commands:
  target: 
   description: Target a Player
