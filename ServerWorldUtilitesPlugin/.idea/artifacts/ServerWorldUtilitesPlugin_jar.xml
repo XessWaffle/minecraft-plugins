@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/../../../../Hosting/plugins</output-path>
     <root id="archive" name="ServerWorldUtilitesPlugin.jar">
       <element id="module-output" name="ServerWorldUtilitesPlugin" />
-      <element id="file-copy" path="$PROJECT_DIR$/plugin.yml" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/plugin.yml" />
     </root>
   </artifact>
 </component>
