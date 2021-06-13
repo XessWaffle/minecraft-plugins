@@ -1,0 +1,5 @@
+name: SleepPlugin
+main: sleep.ServerSleepPlugin
+version: 1.0
+api-version: 1.17
+

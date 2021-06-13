@@ -2,6 +2,7 @@ package serverstart;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -42,6 +43,9 @@ class GreetingsListener implements Listener{
 		welcomeMessages.add("Fuck you <name>!");
 		welcomeMessages.add("Sauren's mom is looking for you, <name>!");
 		welcomeMessages.add("o_O <name> O_o");
+		welcomeMessages.add("The game summons <name>!");
+		welcomeMessages.add("~uwu~ <name> :)");
+		welcomeMessages.add("God help us, <name> is here :(");
 		
 		deathMessages.add("You fuckin suck <name>");
 		deathMessages.add("Sauren's mom sat on <name>'s ass!");
@@ -49,11 +53,14 @@ class GreetingsListener implements Listener{
 		deathMessages.add("You fuckin deserved it <name>.");
 		deathMessages.add("You have been dominated by some fucking code <name>.");
 		deathMessages.add("Bruh Bruh (<name> died)");
+		deathMessages.add("What the fuck <name>");
+		deathMessages.add("Leave the server now, <name>");
 		
 		respawnMessages.add("Finally back from the dead <name>?");
 		respawnMessages.add("<name> lives to fight another day!");
 		respawnMessages.add("Took you long enough, <name>.");
 		respawnMessages.add("Are you Jesus <name>??!!");
+		respawnMessages.add("Don't die again <name>");
 		
 		
 		enabled = true;
@@ -64,7 +71,7 @@ class GreetingsListener implements Listener{
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		if(enabled) {
 			int rand = (int)(Math.random() * welcomeMessages.size());
-			String broadcast = welcomeMessages.get(rand).replace("<name>", event.getPlayer().getName());
+			String broadcast = welcomeMessages.get(rand).replace("<name>", ChatColor.YELLOW + event.getPlayer().getName() + ChatColor.WHITE);
 			
 			Bukkit.broadcastMessage(broadcast);
 		}
@@ -74,7 +81,7 @@ class GreetingsListener implements Listener{
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		if(enabled) {
 			int rand = (int)(Math.random() * deathMessages.size());
-			String broadcast = deathMessages.get(rand).replace("<name>", event.getEntity().getName());
+			String broadcast = deathMessages.get(rand).replace("<name>", ChatColor.RED + event.getEntity().getName() + ChatColor.WHITE);
 			
 			Bukkit.broadcastMessage(broadcast);
 		}
@@ -84,7 +91,7 @@ class GreetingsListener implements Listener{
 	public void onPlayerRespawn(PlayerRespawnEvent event) {
 		if(enabled) {
 			int rand = (int)(Math.random() * respawnMessages.size());
-			String broadcast = respawnMessages.get(rand).replace("<name>", event.getPlayer().getName());
+			String broadcast = respawnMessages.get(rand).replace("<name>", ChatColor.BLUE + event.getPlayer().getName() + ChatColor.WHITE);
 			
 			Bukkit.broadcastMessage(broadcast);
 		}

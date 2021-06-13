@@ -1,0 +1,13 @@
+name: DeathChest
+main: gravemanager.GraveCreatorPlugin
+version: 1.0
+api-version: 1.17
+commands:
+  gravetoggle:
+    description: Toggle deathchests
+    usage: "/<command>"
+    permission: op
+
+  grave:
+    description: Grave options
+    usage: "/<command> <inst>"
