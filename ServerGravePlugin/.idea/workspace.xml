@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="ServerGravePlugin:jar" />
+      <artifact name="ServerGravePlugin:jar2" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
@@ -11,12 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8f4d5142-40a7-4797-b662-c80f6a0d9baa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ServerGravePlugin/cmd/CommandGrave.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ServerGravePlugin/cmd/CommandGrave.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ServerGravePlugin/utils/Grave.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ServerGravePlugin/utils/Grave.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cmd/CommandGrave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cmd/CommandGrave.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gravemanager/GraveListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gravemanager/GraveListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/io/GraveData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/io/GraveData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/Grave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Grave.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -26,21 +26,29 @@ public class CommandGrave implements CommandExecutor {
 
 
 
-            if(strings.length == 1){
-                if (strings[0].equals("list")){
+            if(strings.length == 1) {
+                if (strings[0].equals("list")) {
 
                     int i = 0;
 
-                    for(Location l: graveData.getGraves(sender)) {
+                    for (Location l : graveData.getGraves(sender)) {
                         commandSender.sendMessage("Grave " + (i++) + ": " + "(" + l.getBlockX() + ", " + l.getBlockY() + ", " + l.getBlockZ() + ") in " + l.getWorld().getName());
                     }
-                } else if(strings[0].equals("prune")){
-                    if(sender.isOp()) {
+                } else if (strings[0].equals("prune")) {
+                    if (sender.isOp()) {
                         graveData.prune(commandSender);
                     }
                 }
 
                 return true;
+            } else if(strings.length == 2){
+                if(strings[0].equals("list") && sender.isOp()){
+                    int i = 0;
+                    commandSender.sendMessage("For player " + strings[1]);
+                    for (Location l : graveData.getGraves(Bukkit.getPlayer(strings[1]))) {
+                        commandSender.sendMessage("Grave " + (i++) + ": " + "(" + l.getBlockX() + ", " + l.getBlockY() + ", " + l.getBlockZ() + ") in " + l.getWorld().getName());
+                    }
+                }
             } else if(strings.length == 3){
                 if(strings[0].equals("restore") && sender.isOp()){
                     int i = 0;
