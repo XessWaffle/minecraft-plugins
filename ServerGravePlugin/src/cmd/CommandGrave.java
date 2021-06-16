@@ -45,7 +45,7 @@ public class CommandGrave implements CommandExecutor {
                 if(strings[0].equals("list") && sender.isOp()){
                     int i = 0;
                     commandSender.sendMessage("For player " + strings[1]);
-                    for (Location l : graveData.getGraves(Bukkit.getPlayer(strings[1]))) {
+                    for (Location l : graveData.getGraves(Bukkit.getOfflinePlayer(strings[1]))) {
                         commandSender.sendMessage("Grave " + (i++) + ": " + "(" + l.getBlockX() + ", " + l.getBlockY() + ", " + l.getBlockZ() + ") in " + l.getWorld().getName());
                     }
                 }
@@ -53,14 +53,14 @@ public class CommandGrave implements CommandExecutor {
                 if(strings[0].equals("restore") && sender.isOp()){
                     int i = 0;
 
-                    for(Location l: graveData.getGraves(Bukkit.getPlayer(strings[1]))){
+                    for(Location l: graveData.getGraves(Bukkit.getOfflinePlayer(strings[1]))){
 
                         if(i == Integer.parseInt(strings[2])){
-                            Grave restored = graveData.getGraveAtLocation(Bukkit.getPlayer(strings[1]), l);
+                            Grave restored = graveData.getGraveAtLocation(Bukkit.getOfflinePlayer(strings[1]).getPlayer(), l);
                             restored.dropItems(sender.getLocation());
 
                             commandSender.sendMessage("Grave " + (i) + ": " + "(" + l.getBlockX() + ", " + l.getBlockY() + ", " + l.getBlockZ() + ") in " + l.getWorld().getName() + " restored!");
-                            graveData.removeGrave(Bukkit.getPlayer(strings[1]), restored);
+                            graveData.removeGrave(Bukkit.getOfflinePlayer(strings[1]).getPlayer(), restored);
                         }
 
                         i++;

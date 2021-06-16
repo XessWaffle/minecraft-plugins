@@ -3,10 +3,7 @@ package io;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import gravemanager.GraveCreatorPlugin;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -110,6 +107,20 @@ public class GraveData {
 
         return locs;
 
+    }
+
+    public ArrayList<Location> getGraves(OfflinePlayer offlinePlayer) {
+
+        JsonArray target = findPlayer(offlinePlayer.getUniqueId().toString()).get("graves").getAsJsonArray();
+        ArrayList<Location> locs = new ArrayList<>();
+        for(int i = 0; i < target.size(); i++){
+            JsonObject graveDat = target.get(i).getAsJsonObject();
+            JsonObject location = graveDat.get("location").getAsJsonObject();
+
+            locs.add(new Location(Bukkit.getWorld(location.get("world").getAsString()), location.get("x").getAsDouble(), location.get("y").getAsDouble(), location.get("z").getAsDouble()));
+        }
+
+        return locs;
     }
 
     public boolean existsGraveAtLocation(Location l){
@@ -265,4 +276,6 @@ public class GraveData {
 
 
     }
+
+
 }

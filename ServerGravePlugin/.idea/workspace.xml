@@ -12,6 +12,7 @@
     <list default="true" id="8f4d5142-40a7-4797-b662-c80f6a0d9baa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cmd/CommandGrave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cmd/CommandGrave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/io/GraveData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/io/GraveData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
