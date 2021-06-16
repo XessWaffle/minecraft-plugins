@@ -6,6 +6,8 @@ import gravemanager.GraveCreatorPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -13,6 +15,7 @@ import utils.Grave;
 import utils.InventorySerialization;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class GraveData {
@@ -95,9 +98,9 @@ public class GraveData {
         return null;
     }
 
-    public HashSet<Location> getGraves(Player p){
+    public ArrayList<Location> getGraves(Player p){
         JsonArray target = findPlayer(p.getUniqueId().toString()).get("graves").getAsJsonArray();
-        HashSet<Location> locs = new HashSet<>();
+        ArrayList<Location> locs = new ArrayList<>();
         for(int i = 0; i < target.size(); i++){
             JsonObject graveDat = target.get(i).getAsJsonObject();
             JsonObject location = graveDat.get("location").getAsJsonObject();
@@ -107,6 +110,25 @@ public class GraveData {
 
         return locs;
 
+    }
+
+    public boolean existsGraveAtLocation(Location l){
+        for(JsonElement je: graveData){
+            JsonArray target = je.getAsJsonObject().getAsJsonArray("graves");
+
+
+            for(int i = 0; i < target.size(); i++){
+
+                JsonObject location = target.get(i).getAsJsonObject().get("location").getAsJsonObject();
+                if(location.get("x").getAsInt() == l.getBlockX() && location.get("y").getAsInt() == l.getBlockY()
+                        && location.get("z").getAsInt() == l.getBlockZ() && location.get("world").getAsString().equals(l.getWorld().getName())){
+                    return true;
+                }
+            }
+
+        }
+
+        return false;
     }
 
     public Grave getGraveAtLocation(Player p, Location l){
@@ -180,7 +202,15 @@ public class GraveData {
 
         if(targetObj != null){
             JsonArray graves = targetObj.get("graves").getAsJsonArray();
-            graves.remove(createGrave(grave));
+            for(int i = 0; i < graves.size(); i++){
+
+                JsonObject location = graves.get(i).getAsJsonObject().get("location").getAsJsonObject();
+                if(location.get("x").getAsInt() == grave.getDeathLocation().getBlockX() && location.get("y").getAsInt() == grave.getDeathLocation().getBlockY()
+                        && location.get("z").getAsInt() == grave.getDeathLocation().getBlockZ() && location.get("world").getAsString().equals(grave.getDeathLocation().getWorld().getName())){
+                    graves.remove(i);
+                    break;
+                }
+            }
         }
 
         writeFile();
@@ -207,4 +237,32 @@ public class GraveData {
     }
 
 
+    public void prune(CommandSender cmdSend) {
+        ArrayList<String> worldsLoaded = new ArrayList<>();
+
+        for(World w: Bukkit.getWorlds()){
+            worldsLoaded.add(w.getName());
+        }
+
+        cmdSend.sendMessage("Loaded Worlds: " + worldsLoaded.toString());
+
+        for(JsonElement je: graveData){
+            JsonArray target = je.getAsJsonObject().getAsJsonArray("graves");
+            cmdSend.sendMessage("Pruned " + je.getAsJsonObject().get("name"));
+            for(int i = 0; i < target.size(); i++){
+                if(!worldsLoaded.contains(target.get(i).getAsJsonObject().get("location").getAsJsonObject().get("world").getAsString())){
+                    cmdSend.sendMessage("Grave " + i);
+                    target.remove(i);
+
+                    i = 0;
+                }
+            }
+        }
+
+        cmdSend.sendMessage("Pruning Complete!");
+
+        writeFile();
+
+
+    }
 }

@@ -111,4 +111,22 @@ public class Grave {
     public void setDeadPlayer(Player dead){
         this.died = dead;
     }
+
+    public void dropItems(Location location) {
+        for(ItemStack stack: storageContents) {
+            if(stack != null) {
+                location.getWorld().dropItem(location, stack);
+            }
+        }
+
+        for(ItemStack stack: armor) {
+            if(stack != null)
+                location.getWorld().dropItem(location, stack);
+        }
+
+        for(ItemStack stack: offhandContents) {
+            if(stack != null)
+                location.getWorld().dropItem(location, stack);
+        }
+    }
 }

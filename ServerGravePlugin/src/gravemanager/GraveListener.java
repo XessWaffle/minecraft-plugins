@@ -2,11 +2,15 @@ package gravemanager;
 
 import io.GraveData;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import utils.Grave;
+
+import java.util.ArrayList;
 
 public class GraveListener implements Listener {
 
@@ -43,6 +47,19 @@ public class GraveListener implements Listener {
                 //null pointer
             }
         }
+    }
+
+    @EventHandler
+    public void onEntityExplode(EntityExplodeEvent event) {
+
+        for (Block block : new ArrayList<>(event.blockList())){
+            if(block.getType() == Material.CHEST){
+                if(graveData.existsGraveAtLocation(block.getLocation())){
+                    event.blockList().remove(block);
+                }
+            }
+        }
+
     }
 
     public void enable() {
