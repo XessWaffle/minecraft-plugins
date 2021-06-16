@@ -181,6 +181,45 @@ public class GraveData {
 
     }
 
+    public Grave getGraveAtLocation(OfflinePlayer p, Location l){
+        Grave grave = new Grave();
+
+        JsonArray target = findPlayer(p.getUniqueId().toString()).get("graves").getAsJsonArray();
+
+        for(int i = 0; i < target.size(); i++){
+            JsonObject graveDat = target.get(i).getAsJsonObject();
+            JsonObject location = graveDat.get("location").getAsJsonObject();
+
+            if(location.get("x").getAsInt() == l.getBlockX() && location.get("y").getAsInt() == l.getBlockY() && location.get("z").getAsInt() == l.getBlockZ()
+                    && location.get("world").getAsString().equals(l.getWorld().getName())){
+
+                grave.setDeathLocation(l);
+                grave.setDeadPlayer(p.getPlayer());
+                ItemStack[] storageContents = null, armor = null, offhand = null;
+
+                try {
+                    armor = InventorySerialization.itemStackArrayFromBase64(graveDat.get("armor").getAsString());
+                    storageContents = InventorySerialization.itemStackArrayFromBase64(graveDat.get("content").getAsString());
+                    offhand = InventorySerialization.itemStackArrayFromBase64(graveDat.get("offhand").getAsString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                grave.setPlayerDeathInventoryArmor(armor);
+                grave.setPlayerDeathInventoryStorageContents(storageContents);
+                grave.setPlayerDeathInventoryOffhand(offhand);
+                grave.setPrevMaterial(Material.getMaterial(graveDat.get("material").getAsString()));
+
+                return grave;
+
+            }
+
+        }
+
+        return null;
+
+    }
+
     public void addGrave(Grave grave){
 
         Player died = grave.getDeadPlayer();
@@ -209,6 +248,25 @@ public class GraveData {
     }
 
     public void removeGrave(Player recovered, Grave grave){
+        JsonObject targetObj = findPlayer(recovered.getUniqueId().toString());
+
+        if(targetObj != null){
+            JsonArray graves = targetObj.get("graves").getAsJsonArray();
+            for(int i = 0; i < graves.size(); i++){
+
+                JsonObject location = graves.get(i).getAsJsonObject().get("location").getAsJsonObject();
+                if(location.get("x").getAsInt() == grave.getDeathLocation().getBlockX() && location.get("y").getAsInt() == grave.getDeathLocation().getBlockY()
+                        && location.get("z").getAsInt() == grave.getDeathLocation().getBlockZ() && location.get("world").getAsString().equals(grave.getDeathLocation().getWorld().getName())){
+                    graves.remove(i);
+                    break;
+                }
+            }
+        }
+
+        writeFile();
+    }
+
+    public void removeGrave(OfflinePlayer recovered, Grave grave){
         JsonObject targetObj = findPlayer(recovered.getUniqueId().toString());
 
         if(targetObj != null){

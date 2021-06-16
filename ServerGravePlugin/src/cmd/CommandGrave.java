@@ -56,11 +56,11 @@ public class CommandGrave implements CommandExecutor {
                     for(Location l: graveData.getGraves(Bukkit.getOfflinePlayer(strings[1]))){
 
                         if(i == Integer.parseInt(strings[2])){
-                            Grave restored = graveData.getGraveAtLocation(Bukkit.getOfflinePlayer(strings[1]).getPlayer(), l);
+                            Grave restored = graveData.getGraveAtLocation(Bukkit.getOfflinePlayer(strings[1]), l);
                             restored.dropItems(sender.getLocation());
 
                             commandSender.sendMessage("Grave " + (i) + ": " + "(" + l.getBlockX() + ", " + l.getBlockY() + ", " + l.getBlockZ() + ") in " + l.getWorld().getName() + " restored!");
-                            graveData.removeGrave(Bukkit.getOfflinePlayer(strings[1]).getPlayer(), restored);
+                            graveData.removeGrave(Bukkit.getOfflinePlayer(strings[1]), restored);
                         }
 
                         i++;
