@@ -1,0 +1,19 @@
+name: BlockBreakPlugin
+main: blockbreak.BlockBreakPlugin
+version: 1.0
+api-version: 1.17
+commands:
+ target: 
+  description: Target a Player
+  usage: "/<command> <player>"
+  permission: op
+
+ targets:
+  description: List all targets
+  usage: "/<command>"
+  permission: op
+
+ untarget:
+  description: Untarget a player
+  usage: "/<command> <player>"
+  permission: op
