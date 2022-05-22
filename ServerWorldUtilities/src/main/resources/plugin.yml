@@ -1,0 +1,30 @@
+name: ServerWorldUtilities
+version: '${project.version}'
+main: com.xessmcserver.serverworldutilities.ServerWorldUtilities
+api-version: 1.18
+authors: [ XessWaffle ]
+description: World Utilities for the server (gives universe capabilities)
+website: xesswaffle.github.io
+commands:
+  switch:
+    description: Switch to existing world
+    usage: "/<command> <world-name>"
+
+  create:
+    description: Create a world
+    usage: "/<command> <world-name>"
+    permission: op
+
+  backup:
+    description: Backup a world
+    usage: "/<command>"
+    permission: op
+
+  delete:
+    description: Delete a world permanently
+    usage: "/<command> <world-name>"
+    permission: op
+
+  current:
+    description: Name of current world
+    usage: "/<command>"

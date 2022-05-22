@@ -1,0 +1,22 @@
+name: ServerArbiterPower
+version: '${project.version}'
+main: com.xessmcserver.serverarbiterpower.ServerArbiterPower
+api-version: 1.18
+authors: [ XessWaffle ]
+description: Server Arbiter Powers (includes trolling functionality)
+website: xesswaffle.github.io
+commands:
+  target:
+    description: Target a Player
+    usage: "/<command> <player>"
+    permission: op
+
+  targets:
+    description: List all targets
+    usage: "/<command>"
+    permission: op
+
+  untarget:
+    description: Untarget a player
+    usage: "/<command> <player>"
+    permission: op

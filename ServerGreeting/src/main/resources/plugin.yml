@@ -1,0 +1,7 @@
+name: ServerGreeting
+version: '${project.version}'
+main: com.xessmcserver.servergreeting.ServerGreetings
+api-version: 1.18
+authors: [ XessWaffle ]
+description: Greetings/Info on server
+website: xesswaffle.github.io
