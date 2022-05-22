@@ -7,22 +7,21 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerRespawnEvent;
-import com.xessmcserver.serverworldutilities.util.PluginCore;
+import com.xessmcserver.serverworldutilities.ServerWorldUtilities;
 import com.xessmcserver.serverworldutilities.util.WorldList;
 
 
 import java.io.*;
-import java.util.Scanner;
 
 public class PlayerData {
 
     private static final String FILE_NAME = "playerdata.json";
     private JsonArray playerData;
 
-    private PluginCore ref;
+    private ServerWorldUtilities ref;
     private WorldList worlds;
 
-    public PlayerData(WorldList worlds, PluginCore ref){
+    public PlayerData(WorldList worlds, ServerWorldUtilities ref){
 
         this.worlds = worlds;
 

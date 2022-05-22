@@ -7,11 +7,8 @@ import org.bukkit.WorldType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import com.xessmcserver.serverworldutilities.util.PluginCore;
+import com.xessmcserver.serverworldutilities.ServerWorldUtilities;
 import com.xessmcserver.serverworldutilities.util.WorldList;
-
-
-import java.util.HashMap;
 
 public class CommandCreate implements CommandExecutor {
 
@@ -19,7 +16,7 @@ public class CommandCreate implements CommandExecutor {
 
     private WorldList worlds;
 
-    public PluginCore ref;
+    public ServerWorldUtilities ref;
     public PlayerData dataStore;
 
     public CommandCreate(WorldList worlds){

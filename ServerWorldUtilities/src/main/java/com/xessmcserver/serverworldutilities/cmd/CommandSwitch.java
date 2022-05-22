@@ -7,7 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import com.xessmcserver.serverworldutilities.util.PluginCore;
+import com.xessmcserver.serverworldutilities.ServerWorldUtilities;
 import com.xessmcserver.serverworldutilities.util.WorldList;
 
 
@@ -15,7 +15,7 @@ public class CommandSwitch implements CommandExecutor {
 
     private WorldList worlds;
 
-    public PluginCore ref;
+    public ServerWorldUtilities ref;
     public PlayerData dataStore;
 
     public CommandSwitch(WorldList worlds){

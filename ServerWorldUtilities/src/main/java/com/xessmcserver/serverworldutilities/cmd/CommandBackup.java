@@ -5,7 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import com.xessmcserver.serverworldutilities.util.PluginCore;
+import com.xessmcserver.serverworldutilities.ServerWorldUtilities;
 import com.xessmcserver.serverworldutilities.util.WorldList;
 
 import java.io.File;
@@ -18,7 +18,7 @@ public class CommandBackup implements CommandExecutor{
 
     private WorldList worlds;
 
-    public PluginCore ref;
+    public ServerWorldUtilities ref;
 
     public CommandBackup(WorldList worlds){
         this.worlds = worlds;

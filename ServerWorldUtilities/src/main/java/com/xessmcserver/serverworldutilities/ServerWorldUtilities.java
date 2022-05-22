@@ -1,7 +1,8 @@
-package com.xessmcserver.serverworldutilities.util;
+package com.xessmcserver.serverworldutilities;
 
 import com.xessmcserver.serverworldutilities.cmd.*;
 import com.xessmcserver.serverworldutilities.io.PlayerData;
+import com.xessmcserver.serverworldutilities.util.WorldList;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.event.EventHandler;
@@ -13,7 +14,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class PluginCore extends JavaPlugin{
+public class ServerWorldUtilities extends JavaPlugin{
 
     private WorldList worlds;
 

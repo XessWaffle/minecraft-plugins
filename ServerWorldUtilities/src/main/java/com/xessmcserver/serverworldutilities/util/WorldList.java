@@ -2,6 +2,7 @@ package com.xessmcserver.serverworldutilities.util;
 
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
+import com.xessmcserver.serverworldutilities.ServerWorldUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -9,7 +10,6 @@ import org.bukkit.WorldCreator;
 import java.io.*;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
 public class WorldList {
 
@@ -18,9 +18,9 @@ public class WorldList {
     private JsonArray listWorlds;
     private HashMap<String, World> worldList;
 
-    private PluginCore ref;
+    private ServerWorldUtilities ref;
 
-    public WorldList(PluginCore ref){
+    public WorldList(ServerWorldUtilities ref){
         worldList = new HashMap<>();
 
         JsonArray tempList = new JsonArray();
