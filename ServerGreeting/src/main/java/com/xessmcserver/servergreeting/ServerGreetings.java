@@ -2,6 +2,7 @@ package com.xessmcserver.servergreeting;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -9,6 +10,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.Array;
 import java.util.ArrayList;
 
 
@@ -39,13 +41,15 @@ class GreetingsListener implements Listener {
         deathMessages = new ArrayList<>();
         respawnMessages = new ArrayList<>();
 
+        welcomeMessages.add("Welcome <name>");
+        welcomeMessages.add("XessMCServer welcomes you <name>");
         welcomeMessages.add("Wassup <name>? how ya doin?");
+        welcomeMessages.add("The game summons <name>!");
         welcomeMessages.add("Everyone prepare your assholes, <name> has joined the server!");
         welcomeMessages.add("Nerrrrrrrrrrrddd --><name><---");
         welcomeMessages.add("Fuck you <name>!");
         welcomeMessages.add("Sauren's mom is looking for you, <name>!");
         welcomeMessages.add("o_O <name> O_o");
-        welcomeMessages.add("The game summons <name>!");
         welcomeMessages.add("~uwu~ <name> :)");
         welcomeMessages.add("God help us, <name> is here :(");
 
@@ -74,8 +78,7 @@ class GreetingsListener implements Listener {
         if(enabled) {
             int rand = (int)(Math.random() * welcomeMessages.size());
             String broadcast = welcomeMessages.get(rand).replace("<name>", ChatColor.YELLOW + event.getPlayer().getName() + ChatColor.WHITE);
-
-            Bukkit.broadcastMessage(broadcast);
+            sendTitleToAllPlayers(broadcast, ChatColor.GREEN + "Online: " + Bukkit.getOnlinePlayers().size());
         }
     }
 
@@ -85,7 +88,7 @@ class GreetingsListener implements Listener {
             int rand = (int)(Math.random() * deathMessages.size());
             String broadcast = deathMessages.get(rand).replace("<name>", ChatColor.RED + event.getEntity().getName() + ChatColor.WHITE);
 
-            Bukkit.broadcastMessage(broadcast);
+            sendTitleToAllPlayers(broadcast, "");
         }
     }
 
@@ -95,7 +98,7 @@ class GreetingsListener implements Listener {
             int rand = (int)(Math.random() * respawnMessages.size());
             String broadcast = respawnMessages.get(rand).replace("<name>", ChatColor.BLUE + event.getPlayer().getName() + ChatColor.WHITE);
 
-            Bukkit.broadcastMessage(broadcast);
+            sendTitleToAllPlayers(broadcast, "");
         }
     }
 
@@ -105,5 +108,11 @@ class GreetingsListener implements Listener {
 
     public void disable() {
         enabled = false;
+    }
+
+    public void sendTitleToAllPlayers(String title, String subtitle){
+        for(Player p: Bukkit.getOnlinePlayers()){
+            p.sendTitle(title, subtitle, 1, 40, 10);
+        }
     }
 }

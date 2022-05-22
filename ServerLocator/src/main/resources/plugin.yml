@@ -1,0 +1,7 @@
+name: ServerLocator
+version: '${project.version}'
+main: com.xessmcserver.serverlocator.ServerLocator
+api-version: 1.18
+authors: [ XessWaffle ]
+description: A Coordinates tool
+website: xesswaffle.github.io
