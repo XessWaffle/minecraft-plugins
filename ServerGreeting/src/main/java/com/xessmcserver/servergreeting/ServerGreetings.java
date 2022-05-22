@@ -10,7 +10,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.sql.Array;
 import java.util.ArrayList;
 
 
@@ -41,7 +40,6 @@ class GreetingsListener implements Listener {
         deathMessages = new ArrayList<>();
         respawnMessages = new ArrayList<>();
 
-        welcomeMessages.add("Welcome <name>");
         welcomeMessages.add("XessMCServer welcomes you <name>");
         welcomeMessages.add("Wassup <name>? how ya doin?");
         welcomeMessages.add("The game summons <name>!");
@@ -78,7 +76,10 @@ class GreetingsListener implements Listener {
         if(enabled) {
             int rand = (int)(Math.random() * welcomeMessages.size());
             String broadcast = welcomeMessages.get(rand).replace("<name>", ChatColor.YELLOW + event.getPlayer().getName() + ChatColor.WHITE);
-            sendTitleToAllPlayers(broadcast, ChatColor.GREEN + "Online: " + Bukkit.getOnlinePlayers().size());
+            Bukkit.broadcastMessage(broadcast);
+
+            sendTitleToAllPlayers("Welcome " + ChatColor.AQUA + event.getPlayer().getName(), ChatColor.GREEN + "Online: " + Bukkit.getOnlinePlayers().size());
+
         }
     }
 
@@ -88,7 +89,8 @@ class GreetingsListener implements Listener {
             int rand = (int)(Math.random() * deathMessages.size());
             String broadcast = deathMessages.get(rand).replace("<name>", ChatColor.RED + event.getEntity().getName() + ChatColor.WHITE);
 
-            sendTitleToAllPlayers(broadcast, "");
+            Bukkit.broadcastMessage(broadcast);
+            sendTitleToAllPlayers(ChatColor.WHITE + event.getEntity().getName() + ChatColor.RED + " died", "");
         }
     }
 
@@ -98,7 +100,7 @@ class GreetingsListener implements Listener {
             int rand = (int)(Math.random() * respawnMessages.size());
             String broadcast = respawnMessages.get(rand).replace("<name>", ChatColor.BLUE + event.getPlayer().getName() + ChatColor.WHITE);
 
-            sendTitleToAllPlayers(broadcast, "");
+            Bukkit.broadcastMessage(broadcast);
         }
     }
 
@@ -112,7 +114,7 @@ class GreetingsListener implements Listener {
 
     public void sendTitleToAllPlayers(String title, String subtitle){
         for(Player p: Bukkit.getOnlinePlayers()){
-            p.sendTitle(title, subtitle, 1, 40, 10);
+            p.sendTitle(title, subtitle, 5, 80, 10);
         }
     }
 }
