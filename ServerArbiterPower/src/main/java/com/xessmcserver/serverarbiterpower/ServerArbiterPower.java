@@ -18,7 +18,7 @@ public class ServerArbiterPower extends JavaPlugin{
         getCommand("enforced").setExecutor(cmdt);
         getCommand("unenforce").setExecutor(cmdt);
 
-        //getServer().getPluginManager().registerEvents(decreeManager, this);
+        getServer().getPluginManager().registerEvents(decreeManager, this);
     }
 
     @Override
