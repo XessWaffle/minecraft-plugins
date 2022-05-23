@@ -1,12 +1,14 @@
 package com.xessmcserver.serverarbiterpower.io;
 
 import com.xessmcserver.serverarbiterpower.util.Decree;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEvent;
 
-import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.*;
 
-public class DecreeManager extends TimerTask {
+public class DecreeManager implements Listener {
 
     private boolean enabled;
 
@@ -17,11 +19,7 @@ public class DecreeManager extends TimerTask {
         decrees = new HashMap<>();
         remove = new HashMap<>();
 
-        Timer timer = new Timer();
-        timer.schedule(this, 1000, 2500);
-
     }
-
 
     public void addDecree(String player, Decree decree){
 
@@ -60,29 +58,32 @@ public class DecreeManager extends TimerTask {
         enabled = false;
     }
 
-    @Override
-    public void run(){
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event){
+
         if(enabled) {
-            for(String playerName: this.players()) {
-                Queue<Decree> playerDecrees = decrees.get(playerName);
-                if (playerDecrees == null) {
-                    return;
-                }
-                Decree toEnforce = playerDecrees.poll();
 
-                if (toEnforce.isSingleTimeEvent()) {
-                    toEnforce.enforce();
-                } else if (Math.random() < toEnforce.getProbability()) {
-                    toEnforce.enforce();
-                }
+            String playerName = event.getPlayer().getName();
 
-                if (remove.containsKey(playerName) && toEnforce.getName().equals(remove.get(playerName))) {
-                    remove.put(playerName, "");
-
-                } else {
-                    playerDecrees.add(toEnforce);
-                }
+            Queue<Decree> playerDecrees = decrees.get(playerName);
+            if (playerDecrees == null) {
+                return;
             }
+            Decree toEnforce = playerDecrees.poll();
+
+            if (toEnforce.isSingleTimeEvent()) {
+                toEnforce.enforce();
+            } else if (Math.random() < toEnforce.getProbability()) {
+                toEnforce.enforce();
+            }
+
+            if (remove.containsKey(playerName) && toEnforce.getName().equals(remove.get(playerName))) {
+                remove.put(playerName, "");
+
+            } else {
+                playerDecrees.add(toEnforce);
+            }
+
         }
 
     }
