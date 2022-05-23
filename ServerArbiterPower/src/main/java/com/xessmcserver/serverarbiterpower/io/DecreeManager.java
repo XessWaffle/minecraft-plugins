@@ -42,7 +42,7 @@ public class DecreeManager implements Listener {
 
     public void unenforcePlayer(String player){
         if(decrees.containsKey(player)){
-            decrees.get(player).clear();
+            decrees.remove(player);
         }
     }
 

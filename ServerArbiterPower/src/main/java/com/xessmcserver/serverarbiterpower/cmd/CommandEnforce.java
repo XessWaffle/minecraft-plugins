@@ -79,12 +79,15 @@ public class CommandEnforce implements CommandExecutor{
 
         if(args[1].equals("Drop")){
             toEnqueue = new DropItem(toEnforce);
-            toEnqueue.setProbability(Float.parseFloat(args[2]));
         } else if(args[1].equals("Explosion")){
             toEnqueue = new Explosion(toEnforce);
-            toEnqueue.setProbability(Float.parseFloat(args[2]));
         } else if(args[1].equals("Teleport")){
             toEnqueue = new Teleport(toEnforce);
+        } else if(args[1].equals("Lightning")){
+            toEnqueue = new Teleport(toEnforce);
+        }
+
+        if(toEnqueue != null) {
             toEnqueue.setProbability(Float.parseFloat(args[2]));
         }
 

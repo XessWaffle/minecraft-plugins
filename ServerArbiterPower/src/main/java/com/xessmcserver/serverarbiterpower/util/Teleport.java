@@ -1,30 +1,27 @@
 package com.xessmcserver.serverarbiterpower.util;
 
-import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Teleport extends Decree{
 
+    public static final int DEVIATION = 2;
+
     public Teleport(Player enforced) {
-        super(enforced, "Teleport", 0.0, true);
+        super(enforced, "Teleport", 0.01, false);
     }
 
     @Override
     public void enforce() {
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "switch " + enforced.getName() + " dungeon");
 
-        class TimerTaskHelper extends TimerTask {
-            @Override
-            public void run() {
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "switch " + enforced.getName() + " world");
-            }
-        }
+        Location current = enforced.getLocation();
 
-        Timer timer = new Timer();
-        timer.schedule(new TimerTaskHelper(), 3000);
+        current.add((Math.random() - 0.5) * 2 * DEVIATION,
+                (Math.random() - 0.5) * 2 * DEVIATION,
+                (Math.random() - 0.5) * 2 * DEVIATION);
+
+        enforced.teleport(current);
 
     }
 }
