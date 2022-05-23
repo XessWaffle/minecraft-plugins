@@ -18,8 +18,7 @@ public class Teleport extends Decree{
         Location current = enforced.getLocation();
 
         current.add((Math.random() - 0.5) * 2 * DEVIATION,
-                (Math.random() - 0.5) * 2 * DEVIATION,
-                (Math.random() - 0.5) * 2 * DEVIATION);
+                (Math.random() - 0.5) * 2 * DEVIATION, 0);
 
         enforced.teleport(current);
 

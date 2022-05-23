@@ -1,10 +1,7 @@
 package com.xessmcserver.serverarbiterpower.cmd;
 
 import com.xessmcserver.serverarbiterpower.io.DecreeManager;
-import com.xessmcserver.serverarbiterpower.util.Decree;
-import com.xessmcserver.serverarbiterpower.util.DropItem;
-import com.xessmcserver.serverarbiterpower.util.Explosion;
-import com.xessmcserver.serverarbiterpower.util.Teleport;
+import com.xessmcserver.serverarbiterpower.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -84,7 +81,7 @@ public class CommandEnforce implements CommandExecutor{
         } else if(args[1].equals("Teleport")){
             toEnqueue = new Teleport(toEnforce);
         } else if(args[1].equals("Lightning")){
-            toEnqueue = new Teleport(toEnforce);
+            toEnqueue = new Lightning(toEnforce);
         }
 
         if(toEnqueue != null) {
