@@ -1,16 +1,12 @@
 package com.xessmcserver.serverarbiterpower.io;
 
 import com.xessmcserver.serverarbiterpower.util.Decree;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
+
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
-public class DecreeManager implements Listener {
+public class DecreeManager extends TimerTask {
 
     private boolean enabled;
 
@@ -20,7 +16,12 @@ public class DecreeManager implements Listener {
     public DecreeManager(){
         decrees = new HashMap<>();
         remove = new HashMap<>();
+
+        Timer timer = new Timer();
+        timer.schedule(this, 1000, 2500);
+
     }
+
 
     public void addDecree(String player, Decree decree){
 
@@ -59,28 +60,28 @@ public class DecreeManager implements Listener {
         enabled = false;
     }
 
-    @EventHandler
-    public void onPlayerMove(PlayerMoveEvent event){
+    @Override
+    public void run(){
         if(enabled) {
-            String playerName = event.getPlayer().getName();
-            Queue<Decree> playerDecrees = decrees.get(playerName);
-            if(playerDecrees == null){
-                return;
-            }
+            for(String playerName: this.players()) {
+                Queue<Decree> playerDecrees = decrees.get(playerName);
+                if (playerDecrees == null) {
+                    return;
+                }
+                Decree toEnforce = playerDecrees.poll();
 
-            Decree toEnforce = playerDecrees.poll();
-            
-            if (toEnforce.isSingleTimeEvent()) {
-                toEnforce.enforce();
-            } else if (Math.random() < toEnforce.getProbability()) {
-                toEnforce.enforce();
-            }
+                if (toEnforce.isSingleTimeEvent()) {
+                    toEnforce.enforce();
+                } else if (Math.random() < toEnforce.getProbability()) {
+                    toEnforce.enforce();
+                }
 
-            if (remove.containsKey(playerName) && toEnforce.getName().equals(remove.get(playerName))) {
-                remove.put(playerName, "");
+                if (remove.containsKey(playerName) && toEnforce.getName().equals(remove.get(playerName))) {
+                    remove.put(playerName, "");
 
-            } else {
-                playerDecrees.add(toEnforce);
+                } else {
+                    playerDecrees.add(toEnforce);
+                }
             }
         }
 
