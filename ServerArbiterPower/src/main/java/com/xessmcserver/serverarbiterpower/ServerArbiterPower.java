@@ -1,64 +1,32 @@
 package com.xessmcserver.serverarbiterpower;
 
-import com.xessmcserver.serverarbiterpower.cmd.CommandTarget;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockExplodeEvent;
+import com.xessmcserver.serverarbiterpower.cmd.CommandEnforce;
+import com.xessmcserver.serverarbiterpower.io.DecreeManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ServerArbiterPower extends JavaPlugin{
 
-    private CommandTarget cmdt = new CommandTarget();
-    private TargetListener tl = new TargetListener(cmdt);
+    private DecreeManager decreeManager = new DecreeManager();
+    private CommandEnforce cmdt = new CommandEnforce(decreeManager);
 
     @Override
     public void onEnable() {
-        tl.enable();
-        getCommand("target").setExecutor(cmdt);
-        getCommand("untarget").setExecutor(cmdt);
-        getCommand("targets").setExecutor(cmdt);
-        getServer().getPluginManager().registerEvents(tl, this);
+
+        decreeManager.enable();
+
+        getCommand("enforce").setExecutor(cmdt);
+        getCommand("enforced").setExecutor(cmdt);
+        getCommand("unenforce").setExecutor(cmdt);
+
+        getServer().getPluginManager().registerEvents(decreeManager, this);
     }
 
     @Override
     public void onDisable() {
-        tl.disable();
+        decreeManager.disable();
     }
 
 }
 
-class TargetListener implements Listener {
-
-    private boolean enabled;
-    private CommandTarget lookup;
-
-    public TargetListener(CommandTarget lookup) {
-        enabled = true;
-        this.lookup = lookup;
-    }
-
-    @EventHandler
-    public void onBlockBreak(BlockBreakEvent event) {
-        if(lookup.getTargets().contains(event.getPlayer().getName()) && enabled && Math.random() > 0.98) {
-            Location expLoc = event.getBlock().getLocation();
-
-            World w = event.getPlayer().getWorld();
-            //w.createExplosion(expLoc, 2, false);
-            event.getPlayer().teleport(new Location(w, expLoc.toVector().getX() + (int)((Math.random() - 0.5) * 10), expLoc.toVector().getY(), expLoc.toVector().getZ() + (int)((Math.random() - 0.5) * 10)));
-        }
-    }
-
-    public void enable() {
-        enabled = true;
-    }
-
-    public void disable() {
-        enabled = false;
-    }
-}
 
 

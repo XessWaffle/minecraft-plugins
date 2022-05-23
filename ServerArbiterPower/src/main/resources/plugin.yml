@@ -6,17 +6,17 @@ authors: [ XessWaffle ]
 description: Server Arbiter Powers (includes trolling functionality)
 website: xesswaffle.github.io
 commands:
-  target:
-    description: Target a Player
-    usage: "/<command> <player>"
+  enforce:
+    description: Enforce a decree upon a player
+    usage: "/<command> <player> <decree> <probability>"
     permission: op
 
-  targets:
+  enforced:
     description: List all targets
     usage: "/<command>"
     permission: op
 
-  untarget:
-    description: Untarget a player
-    usage: "/<command> <player>"
+  unenforce:
+    description: Remove all decrees targeting a player
+    usage: "/<command> <player> <decree>"
     permission: op
