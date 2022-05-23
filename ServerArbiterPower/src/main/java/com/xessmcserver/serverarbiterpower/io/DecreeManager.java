@@ -64,8 +64,12 @@ public class DecreeManager implements Listener {
         if(enabled) {
             String playerName = event.getPlayer().getName();
             Queue<Decree> playerDecrees = decrees.get(playerName);
-            Decree toEnforce = playerDecrees.poll();
+            if(playerDecrees == null){
+                return;
+            }
 
+            Decree toEnforce = playerDecrees.poll();
+            
             if (toEnforce.isSingleTimeEvent()) {
                 toEnforce.enforce();
             } else if (Math.random() < toEnforce.getProbability()) {
