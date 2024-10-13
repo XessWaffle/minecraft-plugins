@@ -13,15 +13,19 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class CommandBackup implements CommandExecutor{
 
     private WorldList worlds;
-
     public ServerWorldUtilities ref;
-
+    public HashMap<String, Boolean> worldBackupService;
     public CommandBackup(WorldList worlds){
         this.worlds = worlds;
+        worldBackupService = new HashMap<>();
     }
 
     @Override
@@ -33,25 +37,53 @@ public class CommandBackup implements CommandExecutor{
 
             Player sender = Bukkit.getPlayer(commandSender.getName());
 
-            File from = new File(ref.getServer().getWorldContainer().getAbsolutePath() + "/" + sender.getWorld().getName());
-            File to = null;
+            String worldPath = ref.getServer().getWorldContainer().getAbsolutePath();
+            String worldName = sender.getWorld().getName();
+            String dataPath = ref.getDataFolder().getAbsolutePath();
 
-            if(strings.length == 0) {
-                to = new File(ref.getDataFolder() + "/backup-" + sender.getWorld().getName());
-            } else {
-                to = new File(ref.getDataFolder() + "/backup-" + sender.getWorld().getName() + "-" + strings[0]);
+            worldBackupService.putIfAbsent(worldName, false);
+
+            if(!worldBackupService.get(worldName)) {
+                ScheduledExecutorService ses = Executors.newScheduledThreadPool(1);
+                final Runnable backupService = new Runnable() {
+                    @Override
+                    public void run() {
+                        Bukkit.getServer().broadcastMessage("Backup Initiated");
+                        backup(dataPath, worldPath, worldName, true);
+                        Bukkit.getServer().broadcastMessage("Backup Complete!");
+                    }
+                };
+
+                ses.scheduleAtFixedRate(backupService, 5, 5, TimeUnit.HOURS);
+
+                worldBackupService.put(worldName, true);
+                commandSender.sendMessage("Backup Service Started!");
             }
 
-            try {
-                copyDirectory(from.getAbsolutePath(), to.getAbsolutePath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            backup(dataPath, worldPath, worldName, false);
+
             commandSender.sendMessage("Backup Complete!");
             return true;
         }
 
         return false;
+    }
+
+    public static void backup(String dataPath, String worldPath, String worldName, boolean auto)
+    {
+        File from = new File(worldPath + "/" + worldName);
+        File to;
+
+        if(auto) {
+            to = new File(dataPath + "/autobackup-" + worldName + "-" + System.currentTimeMillis());
+        } else {
+            to = new File(dataPath + "/backup-" + worldName + "-" + System.currentTimeMillis());
+        }
+        try {
+            copyDirectory(from.getAbsolutePath(), to.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void copyDirectory(String sourceDirectoryLocation, String destinationDirectoryLocation)

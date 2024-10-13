@@ -82,6 +82,8 @@ public class CommandEnforce implements CommandExecutor{
             toEnqueue = new Teleport(toEnforce);
         } else if(args[1].equals("Lightning")){
             toEnqueue = new Lightning(toEnforce);
+        } else if(args[1].equals("Jail")){
+            toEnqueue = new Jail(toEnforce);
         }
 
         if(toEnqueue != null) {

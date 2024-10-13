@@ -1,9 +1,14 @@
 package com.xessmcserver.serverarbiterpower.io;
 
 import com.xessmcserver.serverarbiterpower.util.Decree;
+import com.xessmcserver.serverarbiterpower.util.Jail;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 
 import java.util.*;
@@ -58,18 +63,18 @@ public class DecreeManager implements Listener {
         enabled = false;
     }
 
-    @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent event){
-
-        if(enabled) {
-
-            String playerName = event.getPlayer().getName();
-
+    public void processDecree(String playerName) {
+        if (enabled) {
             Queue<Decree> playerDecrees = decrees.get(playerName);
             if (playerDecrees == null) {
                 return;
             }
             Decree toEnforce = playerDecrees.poll();
+
+            if(toEnforce == null)
+            {
+                return;
+            }
 
             if (toEnforce.isSingleTimeEvent()) {
                 toEnforce.enforce();
@@ -85,7 +90,32 @@ public class DecreeManager implements Listener {
             }
 
         }
+    }
 
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event){
+        processDecree(event.getPlayer().getName());
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event)
+    {
+        if(enabled) {
+
+            Jail jailDecree = new Jail(event.getPlayer());
+
+            HashSet<String> playerNames = new HashSet<>();
+
+            for (OfflinePlayer offlinePlayer : Bukkit.getServer().getWhitelistedPlayers()){
+                playerNames.add(offlinePlayer.getName());
+            }
+
+            if(!playerNames.contains(event.getPlayer().getName())) {
+                addDecree(event.getPlayer().getName(), jailDecree);
+            } else {
+                removeDecree(event.getPlayer().getName(), jailDecree.getName());
+            }
+        }
     }
 
 }
