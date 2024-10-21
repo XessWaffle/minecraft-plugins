@@ -111,20 +111,18 @@ class GreetingsListener implements Listener {
                 "Nice effort, but you're still a rookie."
         };
 
-        if(!address.isLoopbackAddress()) {
-            if(!address.isSiteLocalAddress() && ops.contains(player.getName())) {
-                player.setOp(false);
-                player.setGameMode(GameMode.ADVENTURE);
-                player.setWalkSpeed(0.0f);
-                player.chat("I am a little bitchass spoofer trying to fuck with a minecraft server cuz I don't have anything better to do with my life!");
-                sendTitleToAllPlayers(ChatColor.BOLD + "Spoofing Detected", ChatColor.RED + player.getName());
-                Bukkit.broadcastMessage(ChatColor.YELLOW + lightInsults[(int)(Math.random() * lightInsults.length)] + ChatColor.WHITE);
-            } else if(!country.equals("US")) {
-                player.setGameMode(GameMode.ADVENTURE);
-                player.setWalkSpeed(0.0f);
-                sendTitleToAllPlayers(ChatColor.BOLD + "Potential Spoofing Detected", ChatColor.RED + player.getName());
-                Bukkit.broadcastMessage(ChatColor.YELLOW + lightInsults[(int) (Math.random() * lightInsults.length)] + ChatColor.WHITE);
-            }
+        if(!address.isSiteLocalAddress() && ops.contains(player.getName())) {
+            player.setOp(false);
+            player.setGameMode(GameMode.ADVENTURE);
+            player.setWalkSpeed(0.0f);
+            player.chat("I am a little bitchass spoofer trying to fuck with a minecraft server cuz I don't have anything better to do with my life!");
+            sendTitleToAllPlayers(ChatColor.BOLD + "Spoofing Detected", ChatColor.RED + player.getName());
+            Bukkit.broadcastMessage(ChatColor.YELLOW + lightInsults[(int)(Math.random() * lightInsults.length)] + ChatColor.WHITE);
+        } else if(!country.equals("US") && !ops.contains(player.getName())) {
+            player.setGameMode(GameMode.ADVENTURE);
+            player.setWalkSpeed(0.0f);
+            sendTitleToAllPlayers(ChatColor.BOLD + "Potential Spoofing Detected", ChatColor.RED + player.getName());
+            Bukkit.broadcastMessage(ChatColor.YELLOW + lightInsults[(int) (Math.random() * lightInsults.length)] + ChatColor.WHITE);
         } else {
             player.setGameMode(GameMode.SURVIVAL);
             player.setWalkSpeed(0.2f);
