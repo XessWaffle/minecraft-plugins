@@ -40,6 +40,7 @@ public class CommandBackup implements CommandExecutor{
             String worldPath = ref.getServer().getWorldContainer().getAbsolutePath();
             String worldName = sender.getWorld().getName();
             String dataPath = ref.getDataFolder().getAbsolutePath();
+            String senderName = commandSender.getName();
 
             worldBackupService.putIfAbsent(worldName, false);
 
@@ -49,7 +50,7 @@ public class CommandBackup implements CommandExecutor{
                     @Override
                     public void run() {
                         Bukkit.getServer().broadcastMessage("Backup Initiated");
-                        backup(dataPath, worldPath, worldName, true);
+                        backup(dataPath, worldPath, senderName, worldName, true);
                         Bukkit.getServer().broadcastMessage("Backup Complete!");
                     }
                 };
@@ -60,7 +61,7 @@ public class CommandBackup implements CommandExecutor{
                 commandSender.sendMessage("Backup Service Started!");
             }
 
-            backup(dataPath, worldPath, worldName, false);
+            backup(dataPath, worldPath, senderName, worldName, false);
 
             commandSender.sendMessage("Backup Complete!");
             return true;
@@ -69,7 +70,7 @@ public class CommandBackup implements CommandExecutor{
         return false;
     }
 
-    public static void backup(String dataPath, String worldPath, String worldName, boolean auto)
+    public static void backup(String dataPath, String worldPath, String senderName, String worldName, boolean auto)
     {
         File from = new File(worldPath + "/" + worldName);
         File to;
@@ -77,7 +78,7 @@ public class CommandBackup implements CommandExecutor{
         if(auto) {
             to = new File(dataPath + "/autobackup-" + worldName + "-" + System.currentTimeMillis());
         } else {
-            to = new File(dataPath + "/backup-" + worldName + "-" + System.currentTimeMillis());
+            to = new File(dataPath + "/backup-" + senderName + "-" + worldName + "-" + System.currentTimeMillis());
         }
         try {
             copyDirectory(from.getAbsolutePath(), to.getAbsolutePath());

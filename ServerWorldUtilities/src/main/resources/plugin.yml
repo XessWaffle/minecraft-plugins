@@ -18,7 +18,6 @@ commands:
   backup:
     description: Backup a world
     usage: "/<command>"
-    permission: op
 
   delete:
     description: Delete a world permanently

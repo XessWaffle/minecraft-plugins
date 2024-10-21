@@ -1,7 +1,19 @@
 name: ServerLocator
 version: '${project.version}'
 main: com.xessmcserver.serverlocator.ServerLocator
-api-version: 1.18
+api-version: 1.21.1
 authors: [ XessWaffle ]
 description: A Coordinates tool
 website: xesswaffle.github.io
+commands:
+  mark:
+    description: Mark current player location in a stored list
+    usage: "/mark <tag>"
+
+  home:
+    description: Teleport to world spawn (with a price)
+    usage:  "/home"
+
+  sethome:
+    description: Teleport to world spawn (with a price)
+    usage: "/sethome"
